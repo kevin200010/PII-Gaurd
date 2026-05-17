@@ -1,0 +1,37 @@
+[package]
+name = "pii-sidebar"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "pii_sidebar_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri    = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex      = "1"
+# ONNX Runtime — downloads the pre-built ORT shared library at build time
+ort        = { version = "2.0.0-rc.12", features = ["download-binaries", "ndarray"] }
+# HuggingFace tokenizer (loads tokenizer.json directly)
+tokenizers = { version = "0.20", default-features = false, features = ["onig"] }
+ndarray    = "0.16"
+# Async HTTP for model download
+reqwest    = { version = "0.12", features = ["stream"] }
+tokio      = { version = "1", features = ["fs"] }
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_System_DataExchange",
+    "Win32_System_Memory",
+] }
